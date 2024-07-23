@@ -2,7 +2,7 @@
 title: Windows PrivEsc
 authors: 0xMr8anem
 image:
-    path: assets/images/WinPrivEsc/init-Enum/1_9PBLSDGO9EduEOqdWxoCag.jpg
+    path: /assets/images/WinPrivEsc/init-Enum/1_9PBLSDGO9EduEOqdWxoCag.jpg
 date: 2024-07-21 20:00:00 +0800
 categories: HTB
 description: "Windows Privilege Escalation"
