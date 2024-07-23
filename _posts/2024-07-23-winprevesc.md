@@ -1,10 +1,12 @@
 ---
 title: Windows PrivEsc
 authors: 0xMr8anem
+image:
+    path: assets/images/WinPrivEsc/init-Enum/1_9PBLSDGO9EduEOqdWxoCag.jpg
 date: 2024-07-21 20:00:00 +0800
 categories: HTB
-description: "Windows Privilage Escalation"
-tags: [HTB]
+description: "Windows Privilege Escalation"
+tags: [HTB , Windows , PrivEsc]
 toc: true
 ---
 
@@ -59,7 +61,7 @@ tasklist /svc
 - When running a program, Windows looks for that program in the CWD (Current Working Directory) first, then from the PATH going left to right.
 - it is not uncommon to find administrators (or applications) modify the `PATH`
 
-```markup
+```bash
 set
 ```
 
@@ -69,20 +71,20 @@ set
 - The `System Boot Time` and `OS Version` can also be checked to get an idea of the patch level.
 - If the box has not been restarted in over six months, chances are it is also not being patched.
 
-```markup
+```bash
 systeminfo
 ```
 
 - If `systeminfo` doesn't display hotfixes, they may be queriable with [WMI](https://docs.microsoft.com/en-us/windows/win32/wmisdk/wmi-start-page) using the WMI-Command binary with [QFE (Quick Fix Engineering)](https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering) to display patches.
 
-```markup
+```bash
 wmic qfe
 
 ```
 
 - We can do this with PowerShell as well using the [Get-Hotfix](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-hotfix?view=powershell-7.1) cmdlet.
 
-```markup
+```bash
 Get-HotFix | ft -AutoSize
 ```
 
@@ -92,19 +94,19 @@ Get-HotFix | ft -AutoSize
 - This information can often guide us towards hard-to-find exploits. Is `FileZilla`/`Putty`/etc installed?
 - Run  [LaZagne](https://github.com/AlessandroZ/LaZagne) to check if stored credentials for those applications are installed. Also, some programs may be installed and running as a service that is vulnerable.
 
-```markup
+```bash
 wmic product get name
 ```
 
 - We can, of course, do this with PowerShell as well using the [Get-WmiObject](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1) cmdlet.
 
-```markup
+```bash
 Get-WmiObject -Class Win32_Product |  select Name, Version
 ```
 
 **Display Listening Processes**
 
-```markup
+```bash
 netstat -ano
 ```
 
@@ -118,7 +120,7 @@ Check logged-in Users
 - Are they idle or active? Can we determine what they are working on?
 - During an evasive engagement, we would need to tread lightly on a host with other user(s) actively working on it to avoid detection.
 
-```
+```bash
 C:\username> query user
 
  USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME
@@ -129,26 +131,26 @@ C:\username> query user
 
 - knowing what privileges our user has can greatly help in escalating privileges
 
-```markup
+```bash
 whoami /priv
 ```
 
 **Current User Group Information**
 
-```markup
+```bash
 whoami /groups
 ```
 
 **Get All Users on the system**
 
-```markup
+```bash
 net user
 ```
 
 **Get All Groups**
 
-```markup
-net localgroups
+```powershell
+net localgroup
 ```
 
 **Details About a Group**
@@ -156,8 +158,30 @@ net localgroups
 - It is worth checking out the details for any non-standard groups.
 - we may find a password or other interesting information stored in the group's description.
 
-```markup
-net localgroups administrators
+```powershell
+net localgroup administrators
+```
+
+**Get Password Policy & Other Account Information**
+
+```bash
+net accounts
+```
+
+What service is listening on port 8080 (service name not the executable)?
+
+![Untitled](Initial%20Enumeration%208de532159c4a4e178223b99b3c35a7df/Untitled.png)
+
+- First we need to check the Process ID (PID) of process running on port 8080
+
+```powershell
+netstat -ano | findstr "8080"
+```
+
+- then we need to check the task list for the PID
+
+```powershell
+tasklist | findstr "<PID>"
 ```
 
 **Get Password Policy & Other Account Information**
