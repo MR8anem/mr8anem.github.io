@@ -6,7 +6,7 @@ image:
 date: 2024-07-21 20:00:00 +0800
 categories: HTB
 description: "Windows Privilege Escalation"
-tags: [HTB , Windows , PrivEsc]
+tags: [htb , windows , privesc]
 toc: true
 ---
 
