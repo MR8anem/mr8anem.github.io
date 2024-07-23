@@ -73,7 +73,7 @@ theme_mode: # [light | dark]
 # will be added to all image (site avatar & posts' images) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-img_cdn: https://c4.wallpaperflare.com/wallpaper/222/667/746/black-white-black-background-monochrome-wallpaper-preview.jpg
+img_cdn: 
 
 # the avatar on sidebar, support local or CORS resources
 avatar: https://c4.wallpaperflare.com/wallpaper/1006/681/284/4k-apocalypse-dark-background-black-wallpaper-preview.jpg
