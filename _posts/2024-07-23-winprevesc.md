@@ -170,7 +170,7 @@ net accounts
 
 What service is listening on port 8080 (service name not the executable)?
 
-![Untitled](/assets/images/WinPrivEsc/init-Enum/Untitled.png)
+![illustrate](/assets/images/WinPrivEsc/init-Enum/Untitled.png)
 
 - First we need to check the Process ID (PID) of process running on port 8080
 
